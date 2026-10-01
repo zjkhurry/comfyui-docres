@@ -1,0 +1,6 @@
+# DocRes node dependencies. All are already present in a standard ComfyUI install
+# except scikit-image, which is required for the Sauvola binarization prompt.
+einops
+opencv-python
+scikit-image
+safetensors
