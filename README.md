@@ -34,19 +34,15 @@ git clone https://github.com/zjkhurry/comfyui-docres.git
 pip install -r comfyui-docres/requirements.txt
 ```
 
-The weights are stored in this repo with [Git LFS](https://git-lfs.com), so a normal `git clone` pulls them down automatically. If you ever need to clone without them:
-
-```bash
-GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/zjkhurry/comfyui-docres.git
-```
+The weights (~335 MB) are **not** in this repo — they download automatically from [Hugging Face](https://huggingface.co/zjkhurry/comfyui-docres-weights) the first time a node needs them, and are cached in `comfyui-docres/weights/`. Nothing to do.
 
 | weights | size | used by |
 |---------|------|---------|
-| `models/docres.safetensors` | 58 MB | DocRes Restore |
-| `models/mbd.safetensors` | 227 MB | DocRes Restore — `dewarping` only |
-| `ddc/models/*.pkl` | 152 MB | DDC Predict Points |
+| `docres.safetensors` | 58 MB | DocRes Restore |
+| `mbd.safetensors` | 227 MB | DocRes Restore — `dewarping` only |
+| `ddc_fiducial1024_v1.safetensors` | 51 MB | DDC Predict Points |
 
-They can also live in `ComfyUI/models/docres/` — both locations are checked. If you only want DocRes and not the control-point nodes, you can delete `ddc/models/`.
+Weights already present in `ComfyUI/models/` are used as-is, so you can drop them there instead and nothing will be downloaded.
 
 Restart ComfyUI. All nodes appear under **image/DocRes**.
 

@@ -29,7 +29,9 @@ import os
 import cv2
 import numpy as np
 import torch
+from safetensors.torch import load_file
 
+import weights_fetch
 from ddc.network import DilatedResnetForFlatByFiducialPointsS2, FiducialPoints
 from ddc.tpsV2 import createThinPlateSplineShapeTransformer
 
@@ -112,20 +114,19 @@ def resolve_device(preferred="auto"):
     return torch.device("cpu")
 
 
-# Control-point weights, shipped next to the network in ddc/models/.
-CHECKPOINT = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "ddc", "models",
-    "2021-02-03 16_15_55flat_img_by_fiducial_points-fiducial1024_v1.pkl",
-)
+# Control-point weights, fetched from Hugging Face on first use and cached in
+# weights/. The upstream release is a training checkpoint whose optimizer state
+# is twice the size of the model; the copy on the Hub is the stripped
+# state_dict, so nothing here needs torch.load or the prefix fixup.
+CHECKPOINT_NAME = "ddc_fiducial1024_v1.safetensors"
 
 
 def _require_checkpoint():
-    if not os.path.isfile(CHECKPOINT):
-        raise FileNotFoundError(
-            "Control-point dewarping weights not found at:\n  %s\n"
-            "Expected the released checkpoint in ddc/models/." % CHECKPOINT
-        )
-    return CHECKPOINT
+    """Path to the control-point weights, downloading them if necessary."""
+    local = os.path.join(weights_fetch.WEIGHT_DIR, CHECKPOINT_NAME)
+    if os.path.isfile(local) and os.path.getsize(local) > 0:
+        return local
+    return weights_fetch.ensure(CHECKPOINT_NAME)
 
 
 def load_model(device):
@@ -143,9 +144,9 @@ def load_model(device):
         BatchNorm="BN",
         in_channels=3,
     )
-    checkpoint = torch.load(path, map_location="cpu", weights_only=False)
-    state = checkpoint["model_state"] if "model_state" in checkpoint else checkpoint
-    # The released checkpoint was saved through DataParallel.
+    state = load_file(path)
+    # Tolerate a file converted from the original .pkl, which carries the
+    # DataParallel prefix.
     state = {k[7:] if k.startswith("module.") else k: v for k, v in state.items()}
     model.load_state_dict(state)
     model = model.eval().to(device)

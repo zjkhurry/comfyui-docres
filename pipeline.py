@@ -17,6 +17,7 @@ from safetensors.torch import load_file
 
 import prompts
 import tiles
+import weights_fetch
 from mbd.deeplab import DeepLab
 from restormer_arch import Restormer
 
@@ -31,8 +32,13 @@ _MODEL_CACHE = {}
 
 
 def _find_weight(name):
-    """Look for a weight file bundled with the node, then in ComfyUI models/."""
-    candidates = [os.path.join(HERE, "models", name)]
+    """Locate `name`, preferring a local copy and downloading it if absent.
+
+    Search order: the node's own weights/ cache, then ComfyUI's model folders
+    (so a user who placed the file there is not made to fetch it again), then
+    Hugging Face.
+    """
+    candidates = [os.path.join(weights_fetch.WEIGHT_DIR, name)]
     try:
         import folder_paths
         candidates.append(os.path.join(folder_paths.models_dir, name))
@@ -42,11 +48,10 @@ def _find_weight(name):
         pass
 
     for path in candidates:
-        if os.path.isfile(path):
+        if os.path.isfile(path) and os.path.getsize(path) > 0:
             return path
-    raise FileNotFoundError(
-        "DocRes weight '%s' not found. Looked in:\n  %s" % (name, "\n  ".join(candidates))
-    )
+
+    return weights_fetch.ensure(name)
 
 
 def _resolve_device(preferred=None):

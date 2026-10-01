@@ -34,19 +34,15 @@ git clone https://github.com/zjkhurry/comfyui-docres.git
 pip install -r comfyui-docres/requirements.txt
 ```
 
-权重用 [Git LFS](https://git-lfs.com) 存在本仓库里，正常 `git clone` 会自动拉下来。如果你想跳过权重克隆：
-
-```bash
-GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/zjkhurry/comfyui-docres.git
-```
+权重（约 335 MB）**不在本仓库里** —— 节点第一次用到时会自动从 [Hugging Face](https://huggingface.co/zjkhurry/comfyui-docres-weights) 下载，并缓存到 `comfyui-docres/weights/`。不需要做任何操作。
 
 | 权重 | 大小 | 用途 |
 |------|------|------|
-| `models/docres.safetensors` | 58 MB | DocRes Restore |
-| `models/mbd.safetensors` | 227 MB | DocRes Restore —— 仅 `dewarping` 用 |
-| `ddc/models/*.pkl` | 152 MB | DDC Predict Points |
+| `docres.safetensors` | 58 MB | DocRes Restore |
+| `mbd.safetensors` | 227 MB | DocRes Restore —— 仅 `dewarping` 用 |
+| `ddc_fiducial1024_v1.safetensors` | 51 MB | DDC Predict Points |
 
-也可以放到 `ComfyUI/models/docres/` 下，两个位置都会检查。如果只用 DocRes、不用控制点节点，`ddc/models/` 可以删掉。
+如果 `ComfyUI/models/` 下已经有权重，会直接使用、不会重复下载。
 
 重启 ComfyUI，所有节点出现在 **image/DocRes** 分类下。
 

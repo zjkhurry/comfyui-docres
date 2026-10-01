@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "comfyui-docres"
+description = "Document image restoration for ComfyUI: dewarping, deshadowing, appearance, deblurring, plus a hand-editable control-point dewarper."
+version = "1.0.0"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = [
+    "einops",
+    "opencv-python",
+    "scikit-image",
+    "safetensors",
+    "huggingface_hub>=0.20",
+    "numpy",
+    "torch",
+]
+
+[project.urls]
+Homepage = "https://github.com/zjkhurry/comfyui-docres"
+Repository = "https://github.com/zjkhurry/comfyui-docres"
+Weights = "https://huggingface.co/zjkhurry/comfyui-docres-weights"
+
+# Used by Comfy Registry: https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "zjkhurry"
+DisplayName = "ComfyUI DocRes"
+Icon = ""
