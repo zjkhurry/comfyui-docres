@@ -30,14 +30,14 @@ ComfyUI 的文档图像修复节点 —— 把弯曲的页面拉平、去掉阴�
 
 ```bash
 cd ComfyUI/custom_nodes
-git clone <this-repo> comfyui-docres
+git clone https://github.com/zjkhurry/comfyui-docres.git
 pip install -r comfyui-docres/requirements.txt
 ```
 
 权重用 [Git LFS](https://git-lfs.com) 存在本仓库里，正常 `git clone` 会自动拉下来。如果你想跳过权重克隆：
 
 ```bash
-GIT_LFS_SKIP_SMUDGE=1 git clone <this-repo>
+GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/zjkhurry/comfyui-docres.git
 ```
 
 | 权重 | 大小 | 用途 |
@@ -80,7 +80,7 @@ DocRes Loader ── model ─┴───────────────�
 
 ### DDC Predict Points
 
-跑控制点网络，输出控制点网格。只做这一件事，不展平。
+跑控制点网络，输出控制点网格。
 
 ![DDC Predict Points](imgs/2.png)
 
@@ -89,7 +89,7 @@ DocRes Loader ── model ─┴───────────────�
 
 ### DDC Edit Points
 
-把控制点画在你的图上让你拖动。它从不跑网络，所以调整是即时且免费的。
+把控制点画在你的图上让你拖动。它从不跑网络，所以调整是即时且自由的。
 
 ![DDC Edit Points](imgs/3.png)
 

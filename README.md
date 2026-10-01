@@ -30,14 +30,14 @@ The first four come from a single model ([DocRes](https://arxiv.org/abs/2405.044
 
 ```bash
 cd ComfyUI/custom_nodes
-git clone <this-repo> comfyui-docres
+git clone https://github.com/zjkhurry/comfyui-docres.git
 pip install -r comfyui-docres/requirements.txt
 ```
 
 The weights are stored in this repo with [Git LFS](https://git-lfs.com), so a normal `git clone` pulls them down automatically. If you ever need to clone without them:
 
 ```bash
-GIT_LFS_SKIP_SMUDGE=1 git clone <this-repo>
+GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/zjkhurry/comfyui-docres.git
 ```
 
 | weights | size | used by |
@@ -80,7 +80,7 @@ DocRes Loader ── model ─┴───────────────�
 
 ### DDC Predict Points
 
-Runs the control-point network and outputs the grid. Nothing else — no warping.
+Runs the control-point network and outputs the grid.
 
 ![DDC Predict Points](imgs/2.png)
 
