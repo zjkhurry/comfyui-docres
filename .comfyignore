@@ -1,0 +1,4 @@
+# Development-only assets: excluded from the published Registry archive.
+imgs/
+workflows/
+convert_weights.py
