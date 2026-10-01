@@ -1,0 +1,514 @@
+{
+  "id": "46fa1610-c8e6-4868-a291-a5ad56238e53",
+  "revision": 0,
+  "last_node_id": 18,
+  "last_link_id": 35,
+  "nodes": [
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        -1730,
+        2060
+      ],
+      "size": [
+        830,
+        1070
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.37.0",
+        "Node name for S&R": "LoadImage",
+        "#sdppp_variant": "default",
+        "#sdppp_simple_content": "canvas",
+        "#sdppp_simple_mask": "canvas",
+        "#sdppp_simple_boundary": "canvas",
+        "#sdppp_label": ""
+      },
+      "widgets_values": [
+        "151_in.png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "151_in.png",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 6,
+      "type": "PreviewImage",
+      "pos": [
+        -890,
+        2130
+      ],
+      "size": [
+        740,
+        950
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.37.0",
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 7,
+      "type": "DDCPredictPoints",
+      "pos": [
+        -90,
+        2150
+      ],
+      "size": [
+        270,
+        360
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "points",
+          "type": "DDC_RAW_POINTS",
+          "links": [
+            24
+          ]
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DDCPredictPoints"
+      },
+      "widgets_values": [
+        "auto"
+      ],
+      "widgets_values_named": {
+        "device": "auto"
+      }
+    },
+    {
+      "id": 12,
+      "type": "DDCRectify",
+      "pos": [
+        620,
+        2190
+      ],
+      "size": [
+        270,
+        310
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 28
+        },
+        {
+          "name": "points",
+          "type": "DDC_EDITED_POINTS",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            34
+          ]
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DDCRectify"
+      }
+    },
+    {
+      "id": 14,
+      "type": "DDCEditPoints",
+      "pos": [
+        210,
+        2150
+      ],
+      "size": [
+        400,
+        430
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "points",
+          "type": "DDC_RAW_POINTS",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "points",
+          "type": "DDC_EDITED_POINTS",
+          "links": [
+            25
+          ]
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            28
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DDCEditPoints"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "widgets_values_named": {
+        "points_json": ""
+      }
+    },
+    {
+      "id": 15,
+      "type": "DocResLoader",
+      "pos": [
+        -80,
+        2700
+      ],
+      "size": [
+        270,
+        90
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "DOCRES_MODEL",
+          "links": [
+            29,
+            30,
+            32
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DocResLoader"
+      },
+      "widgets_values": [
+        "auto"
+      ],
+      "widgets_values_named": {
+        "device": "auto"
+      }
+    },
+    {
+      "id": 16,
+      "type": "DocResRestore",
+      "pos": [
+        260,
+        2710
+      ],
+      "size": [
+        270,
+        140
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "DOCRES_MODEL",
+          "link": 29
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DocResRestore"
+      },
+      "widgets_values": [
+        "deshadowing"
+      ],
+      "widgets_values_named": {
+        "task": "deshadowing"
+      }
+    },
+    {
+      "id": 17,
+      "type": "DocResRestore",
+      "pos": [
+        600,
+        2710
+      ],
+      "size": [
+        270,
+        140
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "DOCRES_MODEL",
+          "link": 30
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            33
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DocResRestore"
+      },
+      "widgets_values": [
+        "deblurring"
+      ],
+      "widgets_values_named": {
+        "task": "deblurring"
+      }
+    },
+    {
+      "id": 18,
+      "type": "DocResRestore",
+      "pos": [
+        260,
+        2900
+      ],
+      "size": [
+        270,
+        140
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "DOCRES_MODEL",
+          "link": 32
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            35
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "DocResRestore"
+      },
+      "widgets_values": [
+        "appearance"
+      ],
+      "widgets_values_named": {
+        "task": "appearance"
+      }
+    }
+  ],
+  "links": [
+    [
+      9,
+      4,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ],
+    [
+      24,
+      7,
+      0,
+      14,
+      0,
+      "DDC_RAW_POINTS"
+    ],
+    [
+      25,
+      14,
+      0,
+      12,
+      1,
+      "DDC_EDITED_POINTS"
+    ],
+    [
+      28,
+      14,
+      2,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      29,
+      15,
+      0,
+      16,
+      0,
+      "DOCRES_MODEL"
+    ],
+    [
+      30,
+      15,
+      0,
+      17,
+      0,
+      "DOCRES_MODEL"
+    ],
+    [
+      31,
+      16,
+      0,
+      17,
+      1,
+      "IMAGE"
+    ],
+    [
+      32,
+      15,
+      0,
+      18,
+      0,
+      "DOCRES_MODEL"
+    ],
+    [
+      33,
+      17,
+      0,
+      18,
+      1,
+      "IMAGE"
+    ],
+    [
+      34,
+      12,
+      0,
+      16,
+      1,
+      "IMAGE"
+    ],
+    [
+      35,
+      18,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.3452271214393107,
+      "offset": [
+        2633.305898284019,
+        -1440.3083008615672
+      ]
+    },
+    "frontendVersion": "1.52.7",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
